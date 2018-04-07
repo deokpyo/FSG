@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* GET app page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'FSG' });
+  res.render('app', { title: 'FSG' });
+});
+
+/* GET thankyou page. */
+router.get('/thankyou', function(req, res, next) {
+  res.render('thankyou', { title: 'FSG' });
 });
 
 /* GET test page. */

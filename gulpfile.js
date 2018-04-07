@@ -81,6 +81,16 @@ gulp.task("js-jquery", function() {
     .pipe(gulp.dest("./public/dist/js/"));
 });
 
+gulp.task("js-preloader", function() {
+  return gulp
+    .src(["./public/js/preloader.js"])
+    .pipe(sourcemaps.init())
+    .pipe(gp_uglify())
+    .pipe(gp_rename("preloader.min.js"))
+    .pipe(sourcemaps.write(""))
+    .pipe(gulp.dest("./public/dist/js/"));
+});
+
 gulp.task("js-app", function() {
     return gulp
       .src(["./public/js/app.js"])
@@ -125,6 +135,7 @@ gulp.task(
   "jsfiles",
   [
     "js-jquery",
+    "js-preloader",
     "js-app",
     "js-moment",
     "js-bootstrap",
