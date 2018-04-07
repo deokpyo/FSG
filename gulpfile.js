@@ -71,12 +71,12 @@ gulp.task(
 
 gulp.task("js-jquery", function() {
   return gulp
-    .src(["./public/js/jquery.js", "./public/js/preloader.js"])
+    .src(["./public/js/jquery.js"])
     .pipe(sourcemaps.init())
     .pipe(gp_concat("gulp-concat.js"))
     .pipe(gulp.dest("./public/min/"))
     .pipe(gp_uglify())
-    .pipe(gp_rename("jquery.min.js"))
+    .pipe(gp_rename("vendor.min.js"))
     .pipe(sourcemaps.write("/"))
     .pipe(gulp.dest("./public/dist/js/"));
 });

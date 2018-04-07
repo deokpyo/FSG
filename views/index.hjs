@@ -1,16 +1,239 @@
 <!DOCTYPE html>
-<html>
+<html dir="ltr" lang="en-US">
 
 <head>
   <title>{{ title }}</title>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./dist/css/bootstrap.min.css" type="text/css" />
   <link rel="stylesheet" href="./dist/css/fonts.min.css" type="text/css" />
+  <link rel="stylesheet" href="./dist/css/bootstrap-slider.min.css" type="text/css" />
+  <link rel="stylesheet" href="./dist/css/style.min.css" type="text/css" />
 </head>
 
 <body>
-  <h1>{{ title }}</h1>
-  <p>Welcome to {{ title }}</p>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div id="status"></div>
+  </div>
+
+  {{! Sticky Header }}
+  <nav id="nav-client" class="navbar" data-spy="affix" data-offset-top="1">
+    <div class="container-fluid">
+      <div class="row text-center">
+        <h4 class="font-title">FINE SOUTHERN GENTLEMEN</h4>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    {{! SHIRT Section }}
+    <div class="row text-center section">
+      {{! Standard }}
+      <h1 class="font-title">SHIRT</h1>
+      <div class="col-xs-12 col-sm-4">
+        <img id="shirt-standard" class="shirt-type" src="./dist/images/shirt-standard.jpg" />
+        <h3>Standard
+          <br/>
+          <small>100% Cotten, Heavyweight</small>
+          <br/>
+          <small>Gildan, Hanes, Fruit of The Loom</small>
+        </h3>
+      </div>
+      {{! Premium }}
+      <div class="col-xs-12 col-sm-4">
+        <img id="shirt-premium" class="shirt-type" src="./dist/images/shirt-premium.jpg" />
+        <h3>Premium
+          <br/>
+          <small>Cotten, Blends, Soft, Fashion Fit</small>
+          <br/>
+          <small>Bella Canvas, Next Level, Tultex</small>
+        </h3>
+      </div>
+      {{! Triblend & More }}
+      <div class="col-xs-12 col-sm-4">
+        <img id="shirt-triblend" class="shirt-type" src="./dist/images/shirt-triblend.jpg" />
+        <h3>Triblend & More</br>
+          <small>Softest, Fashion Fit</small>
+          <br/>
+          <small>Alternative, American Apparel, Triblends, Organics</small>
+        </h3>
+      </div>
+    </div>
+
+    {{! COLORS Section }}
+    <div class="row text-center section">
+      <h1 class="font-title">COLORS</h1>
+      <h4 class="text-muted">How many colors in your logo/design?</h4>
+      <div class="col-xs-12">
+        <ul id="color-select" class="pager">
+          <li>
+            <a href="#">1</a>
+          </li>
+          <li>
+            <a href="#">2</a>
+          </li>
+          <li>
+            <a href="#">3</a>
+          </li>
+          <li>
+            <a href="#">4</a>
+          </li>
+          <li>
+            <a href="#">5</a>
+          </li>
+          <li>
+            <a href="#">6</a>
+          </li>
+        </ul>
+        <button type="button" class="btn btn-default btn-lg" name="blankColor" onclick="onBlankColorClick(event)">I'm not sure / I need a design</button>
+      </div>
+    </div>
+
+    {{! SIZE & QUANTITY Section }}
+    <div class="row text-center section">
+      <h1 class="font-title">SIZE & QUANTITY</h1>
+      <br/>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <p id="slider-xs-label">X-Small</p>
+        <input id="slider-xs" class="quantity-slider" />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <p id="slider-s-label">Small</p>
+        <input id="slider-s" class="quantity-slider" />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <p id="slider-m-label">Medium</p>
+        <input id="slider-m" class="quantity-slider" />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <p id="slider-l-label">Large</p>
+        <input id="slider-l" class="quantity-slider" />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <p id="slider-xl-label">X-Large</p>
+        <input id="slider-xl" class="quantity-slider" />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <p id="slider-xxl-label">XX-Large</p>
+        <input id="slider-xxl" class="quantity-slider" />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <p id="slider-xxxl-label">XXX-Large</p>
+        <input id="slider-xxxl" class="quantity-slider" />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <p>Total: </p>
+        <input type="text" id="slider-quantity-total" class="form-control text-center" value="0" readonly />
+      </div>
+    </div>
+
+    {{! ADD-ONS Section }}
+    <div class="row text-center section">
+      <h1 class="font-title">ADD-ONS</h1>
+      {{! Customization }}
+      <div class="col-xs-12 col-sm-6 col-md-4 text-left">
+        <h4 class="font-title">Customization</h4>
+        {{! Custom Ink Color }}
+        <div class="checkbox">
+          <label>
+            <input onchange="updateAddOns(event)" data="inkCustom" type="checkbox">Custom Ink Color ($20)
+            <small class="glyphicon glyphicon-info-sign text-muted" aria-hidden="true" data-original-title="Custom ink mixed from a pantone or matched to screen with customer approval via photo."
+              data-placement="right" data-toggle="tooltip"></small>
+          </label>
+        </div>
+        {{! Ink Color Change }}
+        <div class="checkbox">
+          <label>
+            <input onchange="updateAddOns(event)" data="inkChange" type="checkbox">Ink Color Change ($10)
+            <small class="glyphicon glyphicon-info-sign text-muted" aria-hidden="true" data-original-title="Screen is cleaned to allow for same design to be printed in another color."
+              data-placement="right" data-toggle="tooltip"></small>
+          </label>
+        </div>
+        {{! 2nd Print Location }}
+        <div class="checkbox">
+          <label>
+            <input onchange="updateAddOns(event)" data="secondPrint" type="checkbox">2nd Print Location (50% of 1st)
+          </label>
+        </div>
+        {{! Opaque Prints }}
+        <div class="checkbox">
+          <label>
+            <input onchange="updateAddOns(event)" data="opaquePrint" type="checkbox">Opaque Prints (25&cent; ea)
+            <small class="glyphicon glyphicon-info-sign text-muted" aria-hidden="true" data-original-title="One layer of ink is printed, the print is partially cured and another layer of ink is printed to give a bright, opaque print."
+              data-placement="right" data-toggle="tooltip"></small>
+          </label>
+        </div>
+        {{! Printed Neck Tags }}
+        <div class="checkbox">
+          <label>
+            <input onchange="updateAddOns(event)" data="neckTags" type="checkbox">Printed Neck Tags (50&cent; ea)
+            <small class="glyphicon glyphicon-info-sign text-muted" aria-hidden="true" data-original-title="Screen printed neck tags in one color. Multiple color prints incur uncharge."
+              data-placement="right" data-toggle="tooltip"></small>
+          </label>
+        </div>
+      </div>
+      {{! Rush Fees }}
+      <div class="col-xs-12 col-sm-6 col-md-4 text-left">
+        <h4 class="font-title">Rush Fees
+          <small class="glyphicon glyphicon-info-sign" aria-hidden="true" data-html="true" data-original-title="Standard Turnaround Time:<br/>10 business days!"
+            data-placement="right" data-toggle="tooltip"></small>
+        </h4>
+        {{! No Rush }}
+        <div class="radio">
+          <label>
+            <input onchange="updateRushOrder(event)" data="noRush" type="radio" name="rushRadio" class="quote-input" checked>No Rush (Free)</label>
+        </div>
+        {{! 1 Business Day }}
+        <div class="radio">
+          <label>
+            <input onchange="updateRushOrder(event)" data="oneDay" type="radio" name="rushRadio" class="quote-input">1 Business Day (50%)</label>
+        </div>
+        {{! 2 Business Days }}
+        <div class="radio">
+          <label>
+            <input onchange="updateRushOrder(event)" data="twoDays" type="radio" name="rushRadio" class="quote-input">2 Business Days (40%)</label>
+        </div>
+        {{! 10 Business Days }}
+        <div class="radio">
+          <label>
+            <input onchange="updateRushOrder(event)" data="tenDays" type="radio" name="rushRadio" class="quote-input">&lt; 10 Business Days (25%)</label>
+        </div>
+      </div>
+      {{! Additional Info }}
+      <div class="col-xs-12 col-sm-12 col-md-4 text-left">
+        <h4 class="font-title">Additional Info</h4>
+        <textarea class="form-control" rows="5" placeholder="Provide any extra information or special consideration for your order"></textarea>
+      </div>
+    </div>
+
+    {{! CUSTOMER Section }}
+    <div class="row text-center section">
+      <h1 class="font-title">CUSTOMER</h1>
+      <form>
+        <div class="form-group col-xs-12 col-md-6 col-md-offset-3">
+          <div class="input-group">
+            <div class="input-group-addon">Name</div>
+            <input type="text" class="form-control" id="customer-name" placeholder="required">
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-md-6 col-md-offset-3">
+          <div class="input-group">
+            <div class="input-group-addon">Email</div>
+            <input type="text" class="form-control" id="customer-email" placeholder="required">
+          </div>
+        </div>
+        <div class="form-group col-xs-12">
+          <button onclick="submitQuote(event)" class="btn btn-black btn-lg">SUBMIT</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  {{!-- scripts --}}
+  <script type="text/javascript" src="./dist/js/vendor.min.js"></script>
+  <script type="text/javascript" src="./dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./dist/js/bootstrap-slider.min.js"></script>
+  <script type="text/javascript" src="./dist/js/app.min.js"></script>
 </body>
 
 </html>
