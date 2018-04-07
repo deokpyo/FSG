@@ -367,33 +367,40 @@ function submitQuote(event) {
 
   FINAL_PRICE = FINAL_PRICE.toFixed(2);
 
+  // var order = {
+  //   shirtType: SHIRT,
+  //   shirtColor: COLOR,
+  //   unitPrice: UNIT_PRICE,
+  //   totalPrice: FINAL_PRICE,
+  //   quantityTotal: TOTAL_QUANTITY,
+  //   quantityModel: quantity,
+  //   addonModel: addons,
+  //   rushModel: rushOrder,
+  //   name: name,
+  //   email: email
+  // };
+
   var order = {
-    shirtType: SHIRT,
-    shirtColor: COLOR,
-    unitPrice: UNIT_PRICE,
-    totalPrice: FINAL_PRICE,
-    quantityTotal: TOTAL_QUANTITY,
+    shirt: SHIRT,
+    color: COLOR,
+    quantity: TOTAL_QUANTITY,
     quantityModel: quantity,
-    addonModel: addons,
-    rushModel: rushOrder,
+    price: FINAL_PRICE,
     name: name,
     email: email
   };
 
-  sendEmail(order);
-
-  // $.post("api/quote", {
-  //   params: JSON.stringify(order)
-  // }, function (res) {
-  //   if (res.confirmation === "success") {
-  //     var id = res.result.id;
-  //     sendEmail(order);
-  //     // window.location = "/quote/" + id;
-  //   } else {
-  //     alert(res.message);
-  //     return;
-  //   }
-  // });
+  $.post("api/quote", { params: JSON.stringify(order) }, function(res) {
+    if (res.confirmation === "success") {
+      console.log(res.result);
+      // var id = res.results.id;
+      // sendEmail(order);
+      // window.location = "/quote/" + id;
+    } else {
+      alert(res.message);
+      return;
+    }
+  });
 }
 
 function sendEmail(order) {

@@ -12,8 +12,8 @@ router.get('/thankyou', function(req, res, next) {
 });
 
 /* GET test page. */
-// router.get('/test', function(req, res, next) {
-//   res.render('test', { title: 'Test Page' });
-// });
+router.get('/test', function(req, res, next) {
+  res.render('test', { title: 'Test Page' });
+});
 
 module.exports = router;

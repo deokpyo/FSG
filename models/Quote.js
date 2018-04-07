@@ -16,6 +16,15 @@ const QuoteSchema = new mongoose.Schema({
         default: '',
         required: true
     },
+    quantityModel: {
+        xs: String,
+        s: String,
+        m: String,
+        l: String,
+        xl: String,
+        xxl: String,
+        xxxl: String
+    },
     price: {
         type: String,
         default: '',
