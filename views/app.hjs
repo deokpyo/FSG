@@ -203,7 +203,7 @@
       {{! Additional Info }}
       <div class="col-xs-12 col-sm-12 col-md-4 text-left">
         <h4 class="font-title">Additional Info</h4>
-        <textarea class="form-control" rows="5" placeholder="Provide any extra information or special consideration for your order"></textarea>
+        <textarea id="input-additional-info" class="form-control" rows="5" placeholder="Provide any extra information or special consideration for your order"></textarea>
       </div>
     </div>
 

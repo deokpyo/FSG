@@ -383,11 +383,15 @@ function submitQuote(event) {
   var order = {
     shirt: SHIRT,
     color: COLOR,
-    quantity: TOTAL_QUANTITY,
     quantityModel: quantity,
-    price: FINAL_PRICE,
+    quantityTotal: TOTAL_QUANTITY,
+    addonModel: addons,
+    rushModel: rushOrder,
+    priceUnit: UNIT_PRICE,
+    priceTotal: FINAL_PRICE,
     name: name,
-    email: email
+    email: email,
+    additional: $("#input-additional-info").val()
   };
 
   $.post("api/quote", { params: JSON.stringify(order) }, function(res) {

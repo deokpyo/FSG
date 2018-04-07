@@ -11,11 +11,6 @@ const QuoteSchema = new mongoose.Schema({
         default: '',
         required: true
     },
-    quantity: {
-        type: String,
-        default: '',
-        required: true
-    },
     quantityModel: {
         xs: String,
         s: String,
@@ -25,7 +20,30 @@ const QuoteSchema = new mongoose.Schema({
         xxl: String,
         xxxl: String
     },
-    price: {
+    quantityTotal: {
+        type: String,
+        default: '',
+        required: true
+    },
+    addonModel:{
+        inkCustom: Object,
+        inkChange: Object,
+        secondPrint: Object,
+        opaquePrint: Object,
+        neckTags: Object
+    },
+    rushModel: {
+        noRush: Boolean,
+        oneDay: Boolean,
+        twoDays: Boolean,
+        tenDays: Boolean
+    },
+    priceUnit: {
+        type: String,
+        default: '',
+        required: true
+    },
+    priceTotal: {
         type: String,
         default: '',
         required: true
@@ -39,6 +57,11 @@ const QuoteSchema = new mongoose.Schema({
         type: String,
         default: '',
         required: true
+    },
+    additional: {
+        type: String,
+        default: '',
+        required: false
     },
     timestamp: {
         type: Date,
