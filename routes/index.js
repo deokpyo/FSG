@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const controllers = require("../controllers");
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 /* GET app page. */
 router.get("/", function(req, res, next) {
@@ -35,8 +36,8 @@ router.post("/email", function(req, res, next) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "jimmyhong.rocks@gmail.com",
-      pass: "ejrvy1024"
+      user: process.env.NODEMAILER_EMAIL,
+      pass: process.env.NODEMAILER_PASS
     }
   });
   const mailOptions = {
