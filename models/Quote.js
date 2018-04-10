@@ -30,13 +30,15 @@ const QuoteSchema = new mongoose.Schema({
         inkChange: Object,
         secondPrint: Object,
         opaquePrint: Object,
-        neckTags: Object
+        neckTags: Object,
+        selected: String
     },
     rushModel: {
         noRush: Boolean,
         oneDay: Boolean,
         twoDays: Boolean,
-        tenDays: Boolean
+        tenDays: Boolean,
+        selected: String
     },
     unitPrice: {
         type: String,

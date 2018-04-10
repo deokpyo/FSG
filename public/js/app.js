@@ -72,7 +72,8 @@ var addons = {
     isUnit: true,
     price: 0.5,
     text: "Printed Neck Tags"
-  }
+  },
+  selected: "None"
 };
 
 // RUSH ORDER MODEL
@@ -80,7 +81,8 @@ var rushOrder = {
   noRush: true,
   oneDay: false,
   twoDays: false,
-  tenDays: false
+  tenDays: false,
+  selected: "Standard Turnaround"
 };
 
 // PRICE CHART MODEL
@@ -336,49 +338,54 @@ function submitQuote(event) {
   var ADD_ONS = "";
 
   // addon price
+  var selectedAddon = "";
   for (i in addons) {
     if (addons[i].selected) {
       var item = addons[i];
       if (i === "secondPrint") {
         FINAL_PRICE += FINAL_PRICE_TEMP * item.price;
+        selectedAddon += "2nd Print Location, ";
       } else if (i === "opaquePrint" || i === "neckTags") {
         var SUM = item.price * TOTAL_QUANTITY;
         FINAL_PRICE += SUM;
         UNIT_PRICE += item.price;
+        if (i === "opaquePrint") {
+          selectedAddon += "Opaque Prints, ";
+        } else {
+          selectedAddon += "Neck Tags";
+        }
       } else {
         FINAL_PRICE += item.price;
+        if (i === "inkCustom") {
+          selectedAddon += "Custom Ink Color, ";
+        } else {
+          selectedAddon += "Ink Color Change, ";
+        }
       }
     }
+  }
+  if(selectedAddon !== "") {
+    addons.selected = selectedAddon;
   }
 
   for (i in rushOrder) {
     if (rushOrder[i]) {
       if (i === "oneDay") {
         FINAL_PRICE = FINAL_PRICE + FINAL_PRICE * 0.5;
+        rushOrder.selected = "1 Business Day";
       }
       if (i === "twoDays") {
         FINAL_PRICE = FINAL_PRICE + FINAL_PRICE * 0.4;
+        rushOrder.selected = "2 Business Days";
       }
       if (i === "tenDays") {
         FINAL_PRICE = FINAL_PRICE + FINAL_PRICE * 0.25;
+        rushOrder.selected = "< 10 Business Days";
       }
     }
   }
 
   FINAL_PRICE = FINAL_PRICE.toFixed(2);
-
-  // var order = {
-  //   shirtType: SHIRT,
-  //   shirtColor: COLOR,
-  //   unitPrice: UNIT_PRICE,
-  //   totalPrice: FINAL_PRICE,
-  //   quantityTotal: TOTAL_QUANTITY,
-  //   quantityModel: quantity,
-  //   addonModel: addons,
-  //   rushModel: rushOrder,
-  //   name: name,
-  //   email: email
-  // };
 
   var order = {
     shirt: SHIRT,
@@ -396,6 +403,7 @@ function submitQuote(event) {
 
   $.post("api/quote", { params: JSON.stringify(order) }, function(res) {
     if (res.confirmation === "success") {
+      sendEmail(order);
       window.location = "/quote/" + res.result._id;
     } else {
       alert(res.message);
@@ -409,4 +417,17 @@ function validateEmail(email) {
     return true;
   }
   return false;
+}
+
+function sendEmail(order) {
+  $.post("email", { params: JSON.stringify(order) }, function(res) {
+    if (res.confirmation === "success") {
+      console.log(res.data);
+      return;
+    } else {
+      var message = JSON.parse(res.message);
+      alert(message);
+      return;
+    }
+  });
 }
