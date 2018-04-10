@@ -42,7 +42,7 @@ router.post("/email", function(req, res, next) {
   });
   const mailOptions = {
     from: request.email,
-    to: "dp.jimmy.hong@gmail.com",
+    to: process.env.NODEMAILER_RECEIVER,
     subject: "FSG Quote Request",
     html: `<!DOCTYPE html>
 <html dir="ltr" lang="en-US">
