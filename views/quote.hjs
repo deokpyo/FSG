@@ -51,9 +51,9 @@
     </div>
 
     {{!-- scripts --}}
-    <script type="text/javascript" src="./dist/js/vendor.min.js"></script>
-    <script type="text/javascript" src="./dist/js/preloader.min.js"></script>
-    <script type="text/javascript" src="./dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../dist/js/vendor.min.js"></script>
+    <script type="text/javascript" src="../dist/js/preloader.min.js"></script>
+    <script type="text/javascript" src="../dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>

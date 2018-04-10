@@ -387,8 +387,8 @@ function submitQuote(event) {
     quantityTotal: TOTAL_QUANTITY,
     addonModel: addons,
     rushModel: rushOrder,
-    priceUnit: UNIT_PRICE,
-    priceTotal: FINAL_PRICE,
+    unitPrice: UNIT_PRICE,
+    totalPrice: FINAL_PRICE,
     name: name,
     email: email,
     additional: $("#input-additional-info").val()
@@ -396,48 +396,12 @@ function submitQuote(event) {
 
   $.post("api/quote", { params: JSON.stringify(order) }, function(res) {
     if (res.confirmation === "success") {
-      console.log(res.result);
-      // var id = res.results.id;
-      // sendEmail(order);
-      // window.location = "/quote/" + id;
+      window.location = "/quote/" + res.result._id;
     } else {
       alert(res.message);
       return;
     }
   });
-}
-
-function sendEmail(order) {
-  var turbo = Turbo({
-    site_id: "5a2dd7e6a9a5810014749555"
-  });
-
-  var emailParams = {
-    fromemail: "deokpyo.hong@utexas.edu",
-    fromname: "FSG Customer",
-    recipient: ["dp.jimmy.hong@gmail.com"],
-    subject: "FSG Quote Request",
-    content: "<p>FSG Quote Request Email Testing</p>"
-  };
-
-  turbo.sendEmail(emailParams, function(err, data) {
-    if (err) {
-      console.log("Error:" + err.message);
-      return;
-    }
-    console.log("Emails Sent: ", data);
-  });
-
-  // $.post("api/email", { params: JSON.stringify(order) }, function(res) {
-  //   if (res.confirmation === "success") {
-  //     console.log(res.data);
-  //     return;
-  //   } else {
-  //     var message = JSON.parse(res.message);
-  //     alert(message);
-  //     return;
-  //   }
-  // });
 }
 
 function validateEmail(email) {
@@ -446,55 +410,3 @@ function validateEmail(email) {
   }
   return false;
 }
-
-// from previous quote result page
-
-// function onModalSubmit() {
-//   var name = $("#customer-name").val();
-//   var email = $("#customer-email").val();
-//   var phone = $("#customer-phone").val();
-//   var company = $("#customer-company").val();
-
-//   if (name.length === 0) {
-//     alert("Please enter your name.");
-//     return;
-//   }
-
-//   if (email.length === 0) {
-//     alert("Please enter your email address.");
-//     return;
-//   }
-
-//   var path = window.location.pathname;
-//   var pathArray = path.split("/");
-//   var quote = pathArray[2];
-
-//   var invoice = {
-//     name: name,
-//     email: email,
-//     phone: phone,
-//     company: company,
-//     quote: quote
-//   };
-
-//   var params = JSON.stringify(invoice);
-
-//   $.post("../api/invoice", { params: params }, function(res) {
-//     if (res.confirmation === "success") {
-//       alert(
-//         "Your invoice request was successful. We will reach back to you soon. Thank you!"
-//       );
-//       $("#modalCustomerInfo").modal("hide");
-//       return;
-//     } else if (res.confirmation === "exists") {
-//       alert(
-//         "Your invoice request for this quote has already been made. We will get back to you as soon as possible. Thank you!"
-//       );
-//       $("#modalCustomerInfo").modal("hide");
-//       return;
-//     } else {
-//       alert(res.message);
-//       return;
-//     }
-//   });
-// }

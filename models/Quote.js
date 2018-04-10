@@ -38,12 +38,12 @@ const QuoteSchema = new mongoose.Schema({
         twoDays: Boolean,
         tenDays: Boolean
     },
-    priceUnit: {
+    unitPrice: {
         type: String,
         default: '',
         required: true
     },
-    priceTotal: {
+    totalPrice: {
         type: String,
         default: '',
         required: true
