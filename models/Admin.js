@@ -4,11 +4,13 @@ var AdminSchema = new mongoose.Schema({
     username: {
         type: String,
         trim: true,
-        default: ''
+        default: '',
+        required: true
     },
     password: {
         type: String,
-        default: ''
+        default: '',
+        required: true
     },
     timestamp: {
         type: Date,
