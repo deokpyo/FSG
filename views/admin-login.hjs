@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <title>{{ title }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/dist/css/fonts.min.css" type="text/css" />
+    <link rel="stylesheet" href="/dist/css/bootstrap-slider.min.css" type="text/css" />
+    <link rel="stylesheet" href="/dist/css/style.min.css" type="text/css" />
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status"></div>
+    </div>
+    <div id="quote-result" class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <img class="img-responsive img-logo" alt="FSG" src="/dist/images/logo.png" />
+            </div>
+            <div class="col-sm-9 text-center">
+                <div class="row">
+                    <form class="form-horizontal">
+                        <h1 class="font-title">ADMIN LOGIN</h1>
+                        <div class="form-group">
+                            <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="inputUsername" class="form-control" name="username" placeholder="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-black btn-lg">Sign in</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {{!-- scripts --}}
+    <script type="text/javascript" src="/dist/js/vendor.min.js"></script>
+    <script type="text/javascript" src="/dist/js/preloader.min.js"></script>
+    <script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

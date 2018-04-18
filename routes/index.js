@@ -9,7 +9,12 @@ router.get("/", function(req, res, next) {
   res.render("app", { title: "FSG" });
 });
 
-/* GET thankyou page. */
+/* GET admin page. */
+router.get("/admin", function(req, res, next) {
+  res.render("admin-login", { title: "FSG Admin" });
+});
+
+/* GET quote page. */
 router.get("/quote/:id", function(req, res, next) {
   const controller = controllers["quote"];
   controller.findById(req.params.id, function(err, result) {
