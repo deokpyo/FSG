@@ -10,8 +10,24 @@ router.get("/", function(req, res, next) {
 });
 
 /* GET admin page. */
-router.get("/admin", function(req, res, next) {
-  res.render("admin-login", { title: "FSG Admin" });
+router.get("/admin", checkAuth, function(req, res, next) {
+  res.render("admin", { title: "FSG Admin" });
+});
+
+// check for admin login
+function checkAuth(req, res, next) {
+  if (req.session.token == null) {
+    res.redirect("/admin/login");
+  } else {
+    next();
+  }
+}
+
+/* GET admin-login page. */
+router.get("/admin/login", function(req, res, next) {
+  res.render("admin-login", {
+    title: "FSG Admin Login"
+  });
 });
 
 /* GET quote page. */

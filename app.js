@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var sessions = require("client-sessions");
 var app = express();
 require("dotenv").config();
 
@@ -23,13 +24,23 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+  sessions({
+    cookieName: "session",
+    secret: process.env.SESSION_SECRET,
+    duration: 24 * 60 * 60 * 1000,
+    activeDuration: 30 * 60 * 1000
+  })
+);
 app.use(express.static(path.join(__dirname, "public")));
 
 // express router setup
 var indexRouter = require("./routes/index");
 var apiRouter = require("./routes/api");
+var adminRouter = require("./routes/api-admin");
 app.use("/", indexRouter);
 app.use("/api", apiRouter);
+app.use("/api-admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

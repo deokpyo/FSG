@@ -3,20 +3,21 @@ var router = express.Router();
 var controllers = require("../controllers");
 var bcrypt = require("bcryptjs");
 var utils = require("../utils");
+require("dotenv").config();
 
 router.get("/:action", function(req, res, next) {
   var action = req.params.action;
 
-  if (action == "currentuser") {
+  if (action === "currentuser") {
     // check for a current user
-    if (req.session == null) {
+    if (req.session === null) {
       res.json({
         confirm: "success",
         message: "user not logged in"
       });
       return;
     }
-    if (req.session.token == null) {
+    if (req.session.token === null) {
       res.json({
         confirm: "success",
         message: "user not logged in"
@@ -26,12 +27,12 @@ router.get("/:action", function(req, res, next) {
     var token = req.session.token;
     utils.JWT.verify(token, process.env.TOKEN_SECRET)
       .then(function(decode) {
-        return controllers.profile.findById(decode.id);
+        return controllers.admin.findById(decode.id);
       })
       .then(function(profile) {
         res.json({
           confirm: "success",
-          profile: profile
+          username: profile.username
         });
       })
       .catch(function(err) {
@@ -42,22 +43,27 @@ router.get("/:action", function(req, res, next) {
         return;
       });
   }
+
+  if (action === "logout") {
+    req.session.reset();
+    res.redirect("/admin/login");
+  }
 });
 
 router.post("/register", function(req, res, next) {
   var credentials = req.body;
-  controllers.profile
+  controllers.admin
     .create(credentials)
     .then(function(profile) {
       // create profile token
-      var token = utils.JWT.sign({ id: profile.id }, process.env.TOKEN_SECRET);
+      var token = utils.JWT.sign({ id: profile._id }, process.env.TOKEN_SECRET);
       req.session.token = token;
-
-      res.json({
-        confirm: "success",
-        profile: profile,
-        token: token
-      });
+      res.redirect("/admin");
+      //   res.json({
+      //     confirm: "success",
+      //     profile: profile,
+      //     token: token
+      //   });
     })
     .catch(function(err) {
       res.json({
@@ -67,17 +73,11 @@ router.post("/register", function(req, res, next) {
     });
 });
 
-// log out
-router.post("/logout", function(req, res, next) {
-  req.session.reset();
-  res.redirect("/login");
-});
-
 // log in
 router.post("/login", function(req, res, next) {
   var credentials = req.body;
 
-  controllers.profile
+  controllers.admin
     .find({ username: credentials.username }, true)
     .then(function(profiles) {
       if (profiles.length == 0) {

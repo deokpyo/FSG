@@ -10,7 +10,7 @@
 
 <body>
     <div class="container">
-        <h1>{{ title }}</h1>
+        <h1>Quote API Test</h1>
         <form class="row" action="/api/quote" method="post">
             <input class="form-control" type="text" name="shirt" placeholder="Shirt" />
             <br/>
@@ -26,6 +26,16 @@
             <br/>
             <input class="form-control" type="submit" value="Submit" />
         </form>
+        
+        <h1>Create Admin Profile</h1>
+        <form class="row" action="/api-admin/register" method="post">
+            <input class="form-control" type="text" name="username" placeholder="username" />
+            <br/>
+            <input class="form-control" type="password" name="password" placeholder="password" />
+            <br/>
+            <input class="form-control" type="submit" value="Submit" />
+        </form>
+
     </div>
 </body>
 
