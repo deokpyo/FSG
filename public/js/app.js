@@ -100,7 +100,32 @@ var SCREEN_PRICE = 20;
 var TOTAL_QUANTITY = 0;
 var SHIRT = null;
 var COLOR = null;
+var COLOR_NOT_SURE = false;
 var SHIRT_PRICE = null;
+
+// Email validator
+function validateEmail(email) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    return true;
+  }
+  return false;
+}
+
+// Email API handler
+function sendEmail(order, orderId) {
+  $.post("email", { params: JSON.stringify(order) }, function(res) {
+    if (res.confirmation === "success") {
+      // on success, go to quote page
+      window.location = "/quote/" + orderId;
+      return;
+    } else {
+      // on failure, alert error message
+      var message = JSON.parse(res.message);
+      alert(message);
+      return;
+    }
+  });
+}
 
 // Shirt handlers
 $("#shirt-standard").click(function(event) {
@@ -163,13 +188,15 @@ $("#color-select li a").click(function(event) {
   currentColor = event.currentTarget;
   currentColor.style.backgroundColor = "#eeeeee";
   COLOR = parseInt(currentColor.text);
+  COLOR_NOT_SURE = false;
 });
 
 function onBlankColorClick(event) {
   event.preventDefault();
   blankColor = event.target;
   blankColor.style.backgroundColor = "#eeeeee";
-  COLOR = "0";
+  COLOR = "1";
+  COLOR_NOT_SURE = true;
   if (currentColor) {
     currentColor.style.backgroundColor = "#ffffff";
     currentColor = null;
@@ -177,80 +204,24 @@ function onBlankColorClick(event) {
 }
 
 // Quantity handlers
-var totalQuantityValue = 0;
-var quantityXS = 0;
-var quantityS = 0;
-var quantityM = 0;
-var quantityL = 0;
-var quantityXL = 0;
-var quantityXXL = 0;
-var quantityXXXL = 0;
-
 function updateSliderTotalQuantity() {
-  totalQuantityValue =
-    quantityXS +
-    quantityS +
-    quantityM +
-    quantityL +
-    quantityXL +
-    quantityXXL +
-    quantityXXXL;
+  var totalQuantityValue =
+    quantity.xs +
+    quantity.s +
+    quantity.m +
+    quantity.l +
+    quantity.xl +
+    quantity.xxl +
+    quantity.xxxl;
   $("#slider-quantity-total").val(totalQuantityValue);
-  TOTAL_QUANTITY = parseInt(totalQuantityValue);
+  TOTAL_QUANTITY = totalQuantityValue;
 }
 
-$("#slider-xs").on("slide", function(event) {
-  quantityXS = parseInt(event.value);
-  quantity.xs = quantityXS;
+function onChangeQuantitySlider(event) {
+  var size = event.target.dataset.size;
+  var value = event.value.newValue;
+  quantity[size] = value;
   updateSliderTotalQuantity();
-});
-$("#slider-s").on("slide", function(event) {
-  quantityS = parseInt(event.value);
-  quantity.s = quantityS;
-  updateSliderTotalQuantity();
-});
-$("#slider-m").on("slide", function(event) {
-  quantityM = parseInt(event.value);
-  quantity.m = quantityM;
-  updateSliderTotalQuantity();
-});
-$("#slider-l").on("slide", function(event) {
-  quantityL = parseInt(event.value);
-  quantity.l = quantityL;
-  updateSliderTotalQuantity();
-});
-$("#slider-xl").on("slide", function(event) {
-  quantityXL = parseInt(event.value);
-  quantity.xl = quantityXL;
-  updateSliderTotalQuantity();
-});
-$("#slider-xxl").on("slide", function(event) {
-  quantityXXL = parseInt(event.value);
-  quantity.xxl = quantityXXL;
-  updateSliderTotalQuantity();
-});
-$("#slider-xxxl").on("slide", function(event) {
-  quantityXXXL = parseInt(event.value);
-  quantity.xxxl = quantityXXXL;
-  updateSliderTotalQuantity();
-});
-
-function updateQuantity(event) {
-  event.preventDefault();
-  var key = event.target.attributes.data.value;
-  var value = parseInt(event.target.value);
-  console.log("updateQuantity", key, value);
-  quantity[key] = value;
-  updateTotalQuantity();
-}
-
-function updateTotalQuantity() {
-  var total = 0;
-  for (i in quantity) {
-    total += quantity[i];
-  }
-  $("#quantity-total").val(total);
-  TOTAL_QUANTITY = total;
 }
 
 // Add-on handler
@@ -387,6 +358,10 @@ function submitQuote(event) {
 
   FINAL_PRICE = FINAL_PRICE.toFixed(2);
 
+  if(COLOR_NOT_SURE) {
+    COLOR = "I'm not sure / I need a design";
+  }
+
   var order = {
     shirt: SHIRT,
     color: COLOR,
@@ -403,30 +378,11 @@ function submitQuote(event) {
 
   $.post("api/quote", { params: JSON.stringify(order) }, function(res) {
     if (res.confirmation === "success") {
-      sendEmail(order);
-      window.location = "/quote/" + res.result._id;
+      var orderId = res.result._id;
+      sendEmail(order, orderId);
+      // 
     } else {
       alert(res.message);
-      return;
-    }
-  });
-}
-
-function validateEmail(email) {
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-    return true;
-  }
-  return false;
-}
-
-function sendEmail(order) {
-  $.post("email", { params: JSON.stringify(order) }, function(res) {
-    if (res.confirmation === "success") {
-      console.log(res.data);
-      return;
-    } else {
-      var message = JSON.parse(res.message);
-      alert(message);
       return;
     }
   });

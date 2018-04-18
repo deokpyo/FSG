@@ -96,31 +96,31 @@
       <br/>
       <div class="col-xs-12 col-sm-6 col-md-3">
         <p id="slider-xs-label">X-Small</p>
-        <input id="slider-xs" class="quantity-slider" />
+        <input class="quantity-slider" data-size="xs" onchange="onChangeQuantitySlider(event)"/>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-3">
         <p id="slider-s-label">Small</p>
-        <input id="slider-s" class="quantity-slider" />
+        <input class="quantity-slider" data-size="s" onchange="onChangeQuantitySlider(event)"/>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-3">
         <p id="slider-m-label">Medium</p>
-        <input id="slider-m" class="quantity-slider" />
+        <input class="quantity-slider" data-size="m" onchange="onChangeQuantitySlider(event)"/>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-3">
         <p id="slider-l-label">Large</p>
-        <input id="slider-l" class="quantity-slider" />
+        <input class="quantity-slider" data-size="l" onchange="onChangeQuantitySlider(event)"/>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-3">
         <p id="slider-xl-label">X-Large</p>
-        <input id="slider-xl" class="quantity-slider" />
+        <input class="quantity-slider" data-size="xl" onchange="onChangeQuantitySlider(event)"/>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-3">
         <p id="slider-xxl-label">XX-Large</p>
-        <input id="slider-xxl" class="quantity-slider" />
+        <input class="quantity-slider" data-size="xxl" onchange="onChangeQuantitySlider(event)"/>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-3">
         <p id="slider-xxxl-label">XXX-Large</p>
-        <input id="slider-xxxl" class="quantity-slider" />
+        <input class="quantity-slider" data-size="xxxl" onchange="onChangeQuantitySlider(event)"/>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-3">
         <p>Total: </p>
