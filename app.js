@@ -37,10 +37,10 @@ app.use(express.static(path.join(__dirname, "public")));
 // express router setup
 var indexRouter = require("./routes/index");
 var apiRouter = require("./routes/api");
-var adminRouter = require("./routes/api-admin");
+var apiAdminRouter = require("./routes/api-admin");
 app.use("/", indexRouter);
 app.use("/api", apiRouter);
-app.use("/api-admin", adminRouter);
+app.use("/api-admin", apiAdminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

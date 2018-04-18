@@ -47,9 +47,9 @@ router.get("/quote/:id", function(req, res, next) {
 });
 
 /* GET test page. */
-router.get("/test", function(req, res, next) {
-  res.render("test", { title: "Test Page" });
-});
+// router.get("/test", function(req, res, next) {
+//   res.render("test", { title: "Test Page" });
+// });
 
 /* POST call for email notification */
 router.post("/email", function(req, res, next) {
