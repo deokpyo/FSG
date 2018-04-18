@@ -175,14 +175,14 @@
       </div>
       {{! Rush Fees }}
       <div class="col-xs-12 col-sm-6 col-md-4 text-left">
-        <h4 class="font-title">Rush Fees
-          <small class="glyphicon glyphicon-info-sign" aria-hidden="true" data-html="true" data-original-title="Standard Turnaround Time:<br/>10 business days!"
-            data-placement="right" data-toggle="tooltip"></small>
-        </h4>
+        <h4 class="font-title">Rush Fees</h4>
         {{! No Rush }}
         <div class="radio">
           <label>
-            <input onchange="updateRushOrder(event)" data="noRush" type="radio" name="rushRadio" class="quote-input" checked>No Rush (Free)</label>
+            <input onchange="updateRushOrder(event)" data="noRush" type="radio" name="rushRadio" class="quote-input" checked>No Rush (Free)
+            <small class="glyphicon glyphicon-info-sign text-muted" aria-hidden="true" data-html="true" data-original-title="Standard Turnaround Time:<br/>10 business days!"
+            data-placement="right" data-toggle="tooltip"></small>
+            </label>
         </div>
         {{! 1 Business Day }}
         <div class="radio">
